@@ -3,7 +3,7 @@
 // ====================================
 
 // Configuração da API
-const API_URL = "https://financepro-api.onrender.com";
+const API_URL = "https://financepro-api.onrender.com/api";
 
 // ====================================
 // HELPERS
