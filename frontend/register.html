@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - FinancePro</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+
+    <!-- LOADING -->
+    <div class="loading-overlay hidden" id="loadingScreen">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- CONTAINER -->
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <!-- LOGO -->
+            <div class="auth-logo">
+                <h1>💰 FinancePro</h1>
+                <p>Crie sua conta gratuitamente</p>
+            </div>
+
+            <!-- FORM -->
+            <form id="registerForm">
+
+                <!-- NOME -->
+                <div class="form-group">
+                    <label class="form-label" for="name">
+                        Nome Completo
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        class="form-input"
+                        placeholder="João Silva"
+                        required
+                    >
+                </div>
+
+                <!-- EMAIL -->
+                <div class="form-group">
+                    <label class="form-label" for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        class="form-input"
+                        placeholder="seu@email.com"
+                        required
+                    >
+                </div>
+
+                <!-- SENHA -->
+                <div class="form-group">
+
+                    <label class="form-label" for="password">
+                        Senha
+                    </label>
+
+                    <div style="position: relative;">
+
+                        <input
+                            type="password"
+                            id="password"
+                            class="form-input"
+                            placeholder="Mínimo 6 caracteres"
+                            required
+                            minlength="6"
+                        >
+
+                        <span
+                            onclick="togglePassword('password', this)"
+                            style="
+                                position:absolute;
+                                right:15px;
+                                top:50%;
+                                transform:translateY(-50%);
+                                cursor:pointer;
+                                font-size:18px;
+                                color:#999;
+                            "
+                        >
+                            👁️
+                        </span>
+
+                    </div>
+                </div>
+
+                <!-- CONFIRMAR SENHA -->
+                <div class="form-group">
+
+                    <label class="form-label" for="confirmPassword">
+                        Confirmar Senha
+                    </label>
+
+                    <div style="position: relative;">
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            class="form-input"
+                            placeholder="Digite a senha novamente"
+                            required
+                        >
+
+                        <span
+                            onclick="togglePassword('confirmPassword', this)"
+                            style="
+                                position:absolute;
+                                right:15px;
+                                top:50%;
+                                transform:translateY(-50%);
+                                cursor:pointer;
+                                font-size:18px;
+                                color:#999;
+                            "
+                        >
+                            👁️
+                        </span>
+
+                    </div>
+                </div>
+
+                <!-- BOTÃO -->
+                <button
+                    type="submit"
+                    class="btn btn-success btn-block"
+                >
+                    Criar Conta
+                </button>
+
+            </form>
+
+            <!-- FOOTER -->
+            <div class="auth-footer">
+                Já tem uma conta?
+                <a href="login.html">
+                    Faça login
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- APP -->
+    <script src="js/app.js"></script>
+
+    <!-- SCRIPT -->
+    <script>
+
+        // MOSTRAR / ESCONDER SENHA
+        function togglePassword(id, element) {
+
+            const input = document.getElementById(id);
+
+            if (input.type === 'password') {
+
+                input.type = 'text';
+                element.innerHTML = '🙈';
+
+            } else {
+
+                input.type = 'password';
+                element.innerHTML = '👁️';
+            }
+        }
+
+        // CADASTRO
+        document
+            .getElementById('registerForm')
+            .addEventListener('submit', async (e) => {
+
+                e.preventDefault();
+
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                // VALIDAR SENHAS
+                if (password !== confirmPassword) {
+
+                    showToast(
+                        'error',
+                        'Erro',
+                        'As senhas não coincidem'
+                    );
+
+                    return;
+                }
+
+                // LOADING
+                document
+                    .getElementById('loadingScreen')
+                    .classList.remove('hidden');
+
+                try {
+
+                    const response = await fetch(`${API_URL}/auth/register`, {
+
+                        method: 'POST',
+
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+
+                        body: JSON.stringify({
+                            name,
+                            email,
+                            password
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    // REMOVER LOADING
+                    document
+                        .getElementById('loadingScreen')
+                        .classList.add('hidden');
+
+                    if (response.ok) {
+
+                        showToast(
+                            'success',
+                            'Sucesso!',
+                            'Conta criada com sucesso'
+                        );
+
+                        setTimeout(() => {
+
+                            window.location.href = 'login.html';
+
+                        }, 1500);
+
+                    } else {
+
+                        showToast(
+                            'error',
+                            'Erro',
+                            data.error || 'Erro ao criar conta'
+                        );
+                    }
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    // REMOVER LOADING
+                    document
+                        .getElementById('loadingScreen')
+                        .classList.add('hidden');
+
+                    showToast(
+                        'error',
+                        'Erro',
+                        'Erro ao conectar com o servidor'
+                    );
+                }
+
+            });
+
+    </script>
+
+</body>
+</html>

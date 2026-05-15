@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinancePro - Controle Financeiro Inteligente</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .welcome-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: var(--spacing-lg);
+        }
+        
+        .welcome-content {
+            max-width: 600px;
+            animation: slideUp 0.6s var(--transition-bounce);
+        }
+        
+        .welcome-logo {
+            font-size: 5rem;
+            margin-bottom: var(--spacing-lg);
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .welcome-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .welcome-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-2xl);
+        }
+        
+        .welcome-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-overlay" id="loadingScreen">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <div class="welcome-screen">
+        <div class="welcome-content">
+            <div class="welcome-logo">💰</div>
+            <h1 class="welcome-title">FinancePro</h1>
+            <p class="welcome-subtitle">
+                Controle suas finanças com inteligência e praticidade
+            </p>
+            <div class="welcome-buttons">
+                <a href="login.html" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.125rem;">
+                    Entrar
+                </a>
+                <a href="register.html" class="btn btn-secondary" style="padding: 1rem 2rem; font-size: 1.125rem;">
+                    Criar Conta
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar se já está logado e redirecionar
+        window.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                // Já está logado, redirecionar para dashboard
+                window.location.href = 'dashboard.html';
+            }
+        });
+    </script>
+</body>
+</html>
