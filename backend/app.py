@@ -2,12 +2,9 @@ from flask import Flask
 from flask_cors import CORS
 
 app = Flask(__name__)
+from flask_cors import CORS
 
-CORS(
-    app,
-    resources={r"/*": {"origins": "*"}},
-    supports_credentials=True
-)
+CORS(app)
 
 @app.after_request
 def after_request(response):
