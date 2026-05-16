@@ -79,14 +79,12 @@
     </div>
 
     <script>
-        // Verificar se já está logado e redirecionar
-        window.addEventListener('DOMContentLoaded', () => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                // Já está logado, redirecionar para dashboard
-                window.location.href = 'dashboard.html';
-            }
-        });
-    </script>
+window.onload = () => {
+  const loading = document.getElementById("loadingScreen");
+  if (loading) {
+    loading.style.display = "none";
+  }
+};
+</script>
 </body>
 </html>
