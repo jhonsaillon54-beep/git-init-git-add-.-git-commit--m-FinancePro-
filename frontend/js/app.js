@@ -3,7 +3,7 @@
 // ====================================
 
 // Configuração da API
-const API_URL = "https://git-init-git-add--git-commit-m-financepro-tbz5.onrender.com";
+const API_URL = "https://git-init-git-add-git-commit-m-financepro-tbz5.onrender.com";
 
 // ====================================
 // HELPERS
