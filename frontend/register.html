@@ -209,21 +209,20 @@
 
                 try {
 
-                    const API_URL = "https://git-init-git-add-git-commit-m-financepro-tbz5.onrender.com/api/auth/register";
+                    const response = await fetch(`${API_URL}/auth/register`, {
 
-const response = await fetch(API_URL, {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        name,
-        email,
-        password
-    })
-});
+                        method: 'POST',
 
-const data = await response.json();
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+
+                        body: JSON.stringify({
+                            name,
+                            email,
+                            password
+                        })
+                    });
 
                     const data = await response.json();
 
